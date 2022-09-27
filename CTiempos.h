@@ -45,7 +45,16 @@ public:
 	 * @param Minuto Minuto de inicio del encendido.
 	 * @param setOn Set a modificar.
 	 */
-	void SetTimeOn(uint8_t Hora, uint8_t Minuto, set_Horario set);
+	void SetTimeOn(uint8_t Hora, uint8_t Minuto, set_Horario& set);
+	/**
+	 * @brief Configura el tiempo de encendido
+	 *
+	 * @param Hora Hora de inicio del encendido.
+	 * @param Minuto Minuto de inicio del encendido.
+	 * @param Temp Temperatura durante este periodo.
+	 * @param Hr Humedad durante este periodo.
+	 */
+	void SetTimeOn(uint8_t Hora, uint8_t Minuto, set_Ambiente& set);
 	/**
 	 * @brief Configura el tiempo de apagado.
 	 *
@@ -60,16 +69,7 @@ public:
 	 * @param Minuto Minutor de inicio del apagado.
 	 * @param setOff Set a modificar.
 	 */
-	void SetTimeOff(uint8_t Hora, uint8_t Minuto, set_Horario set);
-	/**
-	 * @brief Configura el tiempo de encendido
-	 *
-	 * @param Hora Hora de inicio del encendido.
-	 * @param Minuto Minuto de inicio del encendido.
-	 * @param Temp Temperatura durante este periodo.
-	 * @param Hr Humedad durante este periodo.
-	 */
-	void SetTimeOn(uint8_t Hora, uint8_t Minuto, set_Ambiente set);
+	void SetTimeOff(uint8_t Hora, uint8_t Minuto, set_Horario& set);
 	/**
 	 * @brief Configura el tiempo de apagado.
 	 *
@@ -78,7 +78,7 @@ public:
 	 * @param Temp Temperatura durante este perido.
 	 * @param Hr Temperatura durante el periodo.
 	 */
-	void SetTimeOff(uint8_t Hora, uint8_t Minuto, set_Ambiente set);
+	void SetTimeOff(uint8_t Hora, uint8_t Minuto, set_Ambiente& set);
 	/**
 	 * @brief En funcion de setOn y setOff devuelve estado esperado en funcion del teimpo actual.
 	 *

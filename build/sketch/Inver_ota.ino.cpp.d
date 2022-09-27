@@ -143,5 +143,4 @@ c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\Inver_ota.ino.cpp.o: \
  C:\Users\usuario\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\3.0.2\libraries\ESP8266WiFi\src/include/UdpContext.h \
  C:\Users\usuario\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\3.0.2\cores\esp8266/AddrList.h \
  C:\Users\usuario\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\3.0.2\libraries\ArduinoOTA/ArduinoOTA.h \
- c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\invernadero.h \
- C:\Users\usuario\Documents\Arduino\libraries\Time/Time.h
+ c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\invernadero.h

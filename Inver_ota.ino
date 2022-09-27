@@ -18,7 +18,7 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println(F("Booting"));
-  #ifdef C_ESP8266_
+#ifdef C_ESP8266_
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
   while (WiFi.waitForConnectResult() != WL_CONNECTED)
@@ -71,13 +71,13 @@ void setup()
   Serial.print(F("IP address: "));
   Serial.println(WiFi.localIP());
   Inver1.begin();
-  #endif
+#endif
 }
 
 void loop()
 {
-  #ifdef C_ESP8266_
+#ifdef C_ESP8266_
   ArduinoOTA.handle();
-  #endif
+#endif
   Inver1.Control();
 }

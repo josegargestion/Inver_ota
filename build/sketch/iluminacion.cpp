@@ -16,7 +16,7 @@
 #include <TimeLib.h>
 #include "CTiempos.h" // Personal de control de tiempos del procesador y horarios.
 extern Control_Tiempos Horario1;
-extern Hardware Sistema1;
+extern Hardware Sistema;
 Iluminacion::Iluminacion()
 {
     lamparaMillis.currentmillis = 0;                              // Lectura actual de ejecucion.
@@ -27,7 +27,7 @@ void Iluminacion::begin()
 {
     DTIME;
     DPRINTLN(F(" Incializando Iluminacion."));
-    configLampara.EstLampara = Sistema1.GetEstadoIluminacion();
+    configLampara.EstLampara = Sistema.GetEstadoIluminacion();
 }
 void Iluminacion::Control()
 {
@@ -42,15 +42,15 @@ void Iluminacion::Control()
 }
 void Iluminacion::ControlLampara(bool estado)
 {
-    configLampara.EstLampara = Sistema1.GetEstadoIluminacion();
+    configLampara.EstLampara = Sistema.GetEstadoIluminacion();
     if ((estado == true) && (configLampara.EstLampara == false)) // Si esta apagada la enciende.
     {
-        Sistema1.EncenderIluminacion();
+        Sistema.EncenderIluminacion();
     }
     else if ((estado == false) && (configLampara.EstLampara == true)) // Si esta encendida la apaga.
     {
-        Sistema1.ApagarIluminacion();
+        Sistema.ApagarIluminacion();
     }
-    configLampara.EstLampara = Sistema1.GetEstadoIluminacion();
+    configLampara.EstLampara = Sistema.GetEstadoIluminacion();
 }
 

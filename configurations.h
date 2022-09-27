@@ -14,7 +14,7 @@
 
 /* Opciones de selección de MCU. */
 //#define C_NANO_ // Activa compilación para nano usando pines sin expansores.
-#define C_ESP8266_    // Activa compatibilidad con esp8266
+#define C_ESP8266_ // Activa compatibilidad con esp8266
 //#define C_ESP32WROOM_ // Activa compatibilidad con ESP32
 
 /* Opciones de selección de expansores I/O. */
@@ -28,6 +28,10 @@
 //#define DEPOSITO_SOLO_VACIADO // Deposito con bomba o valvula de vaciado.
 //#define DEPOSITO_SOLO_LLENADO // Deposito con bomba o valvula de llenado.
 //#define DEPOSITO_ESTATICO // Deposito que se mantiene en nivel Medio (3 sondas).
+
+/* Sensores de temperatura - humedad */
+//#define SENSOR_INTERIOR_Y_EXTERIOR
+#define SENSOR_INTERIOR
 
 /* Opciones de selección de Reloj. */
 //#define C_RTC_ // Activa opciones de reloj de tiempo real.

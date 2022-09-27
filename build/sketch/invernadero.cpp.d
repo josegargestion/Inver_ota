@@ -58,9 +58,6 @@ c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\invernadero.cpp.o: \
  c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\CTiempos.h \
  c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\deposito.h \
  c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\ambiente.h \
- c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\Iluminacion.h \
  c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\invernadero.h \
- C:\Users\usuario\Documents\Arduino\libraries\Time/Time.h \
- C:\Users\usuario\Documents\Arduino\libraries\Time/TimeLib.h \
  c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\hardware.h \
  c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\lib\DHT.h

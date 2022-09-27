@@ -8,7 +8,6 @@
  * @copyright Copyright (c) 2021
  *
  */
-
 #include "CTiempos.h"        // Personal de control de tiempos del procesador y horarios.
 #include "configurations.h"  // Guarda los datos por defecto del equipo.
 #include <TimeLib.h>         // Control sensores DHT.
@@ -18,31 +17,23 @@ void Control_Tiempos::SetTimeOn(uint8_t Hora, uint8_t Minuto) {
   setOn.Hora = Hora;
   setOn.Minuto = Minuto;
 }
-void Control_Tiempos::SetTimeOn(uint8_t Hora, uint8_t Minuto, set_Horario set) {
+void Control_Tiempos::SetTimeOn(uint8_t Hora, uint8_t Minuto, set_Horario& set) {
   set.Hora = Hora;
   set.Minuto = Minuto;
 }
-void Control_Tiempos::SetTimeOn(uint8_t Hora, uint8_t Minuto, set_Ambiente set) {
-  /** @todo corregir esto
-    SetTimeOn(Hora, Minuto, setOn.set);
-    setOn. = Temp;
-    setOn.Hr = Hr;
-    **/
+void Control_Tiempos::SetTimeOn(uint8_t Hora, uint8_t Minuto, set_Ambiente& set) {
+  SetTimeOn(Hora,Minuto,set.set);
 }
 void Control_Tiempos::SetTimeOff(uint8_t Hora, uint8_t Minuto) {
   setOff.Hora = Hora;
   setOff.Minuto = Minuto;
 }
-void Control_Tiempos::SetTimeOff(uint8_t Hora, uint8_t Minuto, set_Horario set) {
+void Control_Tiempos::SetTimeOff(uint8_t Hora, uint8_t Minuto, set_Horario& set) {
   set.Hora = Hora;
   set.Minuto = Minuto;
 }
-void Control_Tiempos::SetTimeOff(uint8_t Hora, uint8_t Minuto, set_Ambiente set) {
-  /** @todo corregir esto
-    SetTimeOff(Hora, Minuto, setOn.set);
-    setOff.Temp = Temp;
-    setOff.Hr = Hr;
-    **/
+void Control_Tiempos::SetTimeOff(uint8_t Hora, uint8_t Minuto, set_Ambiente& set) {
+  SetTimeOff(Hora,Minuto,set.set);
 }
 bool Control_Tiempos::ControlOnOff(set_Horario setOn, set_Horario setOff) {
   bool control_return = false;

@@ -10,18 +10,19 @@
  *
  */
 #include "configurations.h" // Guarda los datos por defecto del equipo.
-#include "lib\DHT.h"        // Control sensores DHT.
+//#include "lib\DHT.h"        // Control sensores DHT.
 #include "Debug.h"          // Necesario para las llamadas de depuración.
 #include <TimeLib.h>
 //#include <time.h>
 #include "hardware.h"    // Clase de control del hardware.
 #include "ambiente.h"    // Control del ambiente.
-#include "Iluminacion.h" // Control iluminación.
 #include "debug.h"       // Necesario para las llamadas de depuración.
 #include "CTiempos.h"    // Clase de control de horarios.
 #include <Arduino.h>     // STD de arduino.
+#include "Iluminacion.h" // Control iluminación.
 extern Control_Tiempos Horario1;
-extern Hardware Sistema1;
+extern Hardware Sistema;
+Iluminacion Iluminacion1;
 Ambiente::Ambiente()
 {
     ambienteMillis.lastmillis = 0;
@@ -30,6 +31,7 @@ void Ambiente::begin()
 {
     DTIME;
     DPRINTLN(F(" Inicializando Ambiente."));
+    Iluminacion1.begin();
 }
 void Ambiente::Control()
 {
@@ -41,10 +43,11 @@ void Ambiente::Control()
         CallControls(Horario1.ControlOnOff(Horario1.setAOn, Horario1.setAOff));
         ambienteMillis.lastmillis = millis();
     }
+    Iluminacion1.Control();
 }
 void Ambiente::CallControls(bool estado) // LLamada a los elementos de control asignando parametros.
 {
-    Sistema1.GetSensores();
+    Sistema.GetSensores();
     if (estado)
     {
         ControlCalefaccion(setOn);

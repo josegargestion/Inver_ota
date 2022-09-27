@@ -1,6 +1,4 @@
 #line 1 "c:\\Users\\usuario\\Documents\\GitHub\\Inver_ota\\invernadero.h"
-#include <Time.h>
-
 /**
  * @file invernadero.h
  * @brief Control principal del sistema.
@@ -11,7 +9,6 @@
  */
 #ifndef INVERNADERO_H
 #define INVERNADERO_H
-/// @brief clase invernadero, crear con Iner <objname>; .
 class Inver
 {
 public:

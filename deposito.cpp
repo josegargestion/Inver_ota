@@ -15,7 +15,7 @@
 #include <TimeLib.h>
 #include "CTiempos.h" // Personal de control de tiempos del procesador y horarios.
 #include "cAPPconfig.h"		// Guardado de datos a EEPROM.
-extern Hardware Sistema1;
+extern Hardware Sistema;
 Deposito::Deposito()
 {
 }
@@ -58,7 +58,7 @@ void Deposito::Control()
 #endif
 			DTIME;
 			DPRINTLN(F(" Ejecutando Control error Deposito."));
-			Sistema1.ControlErrorDeposito();
+			Sistema.ControlErrorDeposito();
 		}
 		else if (!estadoDeposito.EstadoSensorMax && estadoDeposito.EstadoSensorMin)
 		{
@@ -91,9 +91,9 @@ void Deposito::Control()
 }
 void Deposito::UpdateSondas()
 {
-	Sistema1.UpdateSondas();
-	estadoDeposito.EstadoSensorMax = Sistema1.GetSondaMaximo();
-	estadoDeposito.EstadoSensorMin = Sistema1.GetSondaMinimo();
+	Sistema.UpdateSondas();
+	estadoDeposito.EstadoSensorMax = Sistema.GetSondaMaximo();
+	estadoDeposito.EstadoSensorMin = Sistema.GetSondaMinimo();
 #ifdef DEBUG
 	DTIME;
 	DPRINT(" Sensor Max : ");
@@ -107,21 +107,21 @@ void Deposito::Vaciado(bool estado)
 {
 	if (estado)
 	{
-		Sistema1.EncenderBomba();
+		Sistema.EncenderBomba();
 	}
 	else if (!estado)
 	{
-		Sistema1.ApagarBomba();
+		Sistema.ApagarBomba();
 	}
 }
 void Deposito::LLenado(bool estado)
 {
 	if (estado)
 	{
-		Sistema1.EncenderValvula();
+		Sistema.EncenderValvula();
 	}
 	else if (!estado)
 	{
-		Sistema1.ApagarValvula();
+		Sistema.ApagarValvula();
 	}
 }
