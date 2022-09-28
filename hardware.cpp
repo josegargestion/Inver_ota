@@ -29,8 +29,8 @@
 #include <Arduino.h>     // STD de arduino.
 #include "estructuras.h" // Coleccion de estructuras comunes de proyecto.
 #include <Wire.h>        // Biblioteca i2c standar.
+#include "ilib\Sensor_dht.h"
 extern Control_Tiempos Horario1;
-const unsigned long DHT_TIEMPO_MEDIDAS = 10000;
 estado_Hardware Hardware::estadoHardware;
 config_Hardware Hardware::configHardware;
 millis_set Hardware::hardwareMillis;

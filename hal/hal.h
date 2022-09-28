@@ -34,6 +34,7 @@ const uint16_t LAST_SLOT_DEFAULT = 99;
 const uint16_t EEPROM_ADDR = 0;
 const uint8_t EEPROM_SIG[2] = {0xee, 0x11};
 const uint8_t CONFIG_VERSION = 0;
+const unsigned long DHT_TIEMPO_MEDIDAS = 10000;
 
 #if (INV_DEPOSITO != ANULAR)
 const unsigned long _CalibracionBomba = 10000; // Tiempo de calibracion de la bomba.

@@ -19,7 +19,7 @@
 #include <Arduino.h>        // STD de arduino.
 cAppConfig configApp1;
 Control_Tiempos Horario1;
-Hardware* Sistema = new Hardware;
+Hardware Sistema;
 #if (INV_DEPOSITO != ANULAR)
 Deposito Deposito1;
 #endif
@@ -33,7 +33,7 @@ void Inver::begin()
   configApp1.begin();
   Horario1.SetTimeOn(configApp1._D.OnHora, configApp1._D.OnMinuto);
   Horario1.SetTimeOff(configApp1._D.OffHora, configApp1._D.OffMinuto);
-  Sistema->begin();
+  Sistema.begin();
   Ambiente1.begin();
 #if (INV_DEPOSITO != ANULAR)
 #ifdef DEBUG
@@ -65,7 +65,7 @@ void Inver::begin()
 }
 void Inver::Control()
 {
-  Sistema->Control();
+  Sistema.Control();
   Ambiente1.Control();
 #if (INV_DEPOSITO != ANULAR)
   Deposito1.Control();

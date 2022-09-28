@@ -152,7 +152,7 @@ struct estado_Deposito
 	bool EstadoBomba;	  // Estado de la bomba.
 	bool EstadoValvula;	  // Estado de la electrovalvula.
 };
-enum _TSensores
+enum _TSensor
 {
 	_DHT11,
 	_DHT22,
@@ -160,9 +160,11 @@ enum _TSensores
 	_Humedad,
 	_Binario
 };
-struct _Isensores
+struct _Isensor
 {
-	_TSensores TipoSensor;
+	_TSensor TipoSensor;
+	datos_sensores ValorSensor;
+	boolean Binario;
 };
 /**
  * @brief Variables de configuracion de la clase.
