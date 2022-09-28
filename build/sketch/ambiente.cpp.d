@@ -46,9 +46,11 @@ c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\ambiente.cpp.o: \
  C:\Users\usuario\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\3.0.2\cores\esp8266/debug.h \
  C:\Users\usuario\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\3.0.2\variants\nodemcu/pins_arduino.h \
  c:\users\usuario\appdata\local\arduino15\packages\esp8266\hardware\esp8266\3.0.2\variants\generic\common.h \
+ c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\definiciones.h \
  c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\hal\hal.h \
  c:\users\usuario\documents\github\inver_ota\build\sketch\lib\dht.h \
  c:\users\usuario\documents\github\inver_ota\build\sketch\configurations.h \
+ c:\users\usuario\documents\github\inver_ota\build\sketch\definiciones.h \
  c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\hal\esp8266.h \
  c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\Debug.h \
  C:\Users\usuario\Documents\Arduino\libraries\Time/TimeLib.h \

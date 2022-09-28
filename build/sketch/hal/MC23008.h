@@ -14,7 +14,7 @@
 #ifndef MC23008_H
 #define MC23008_H
 
-#ifdef MC23008
+#if (INV_EXPANSORES == C_MC23008_)
 
 #include <Adafruit_MCP23X08.h>
 #include <Adafruit_MCP23X17.h>

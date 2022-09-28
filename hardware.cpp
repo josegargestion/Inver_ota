@@ -14,54 +14,57 @@
 #include "configurations.h" // Guarda los datos por defecto del equipo.
 #include "Debug.h"          // Necesario para las llamadas de depuración.
 #include "cAPPconfig.h"     // Guardado de datos a EEPROM.
-//#include "lib\DHT.h"            // Control sensores DHT.
+#include "lib\DHT.h"        // Control sensores DHT.
 #include <DHT.h>
 #include <TimeLib.h>
-#include "CTiempos.h"       // Personal de control de tiempos del procesador y horarios.
-#include "hardware.h"       // Biblioteca de control de hardware.
+#include "CTiempos.h" // Personal de control de tiempos del procesador y horarios.
+#include "hardware.h" // Biblioteca de control de hardware.
 #ifndef NODEPOSITO
-#include "deposito.h"       // Control sistema de deposito de liquidos
+#include "deposito.h" // Control sistema de deposito de liquidos
 #endif
 #ifdef C_RTC_
 #include "lib\RTCx.h"
 #include "lib\DS1307RTC.h"
 #endif
-#include <Arduino.h>        // STD de arduino.
-#include "estructuras.h"    // Coleccion de estructuras comunes de proyecto.
-#include <Wire.h>           // Biblioteca i2c standar.
+#include <Arduino.h>     // STD de arduino.
+#include "estructuras.h" // Coleccion de estructuras comunes de proyecto.
+#include <Wire.h>        // Biblioteca i2c standar.
 extern Control_Tiempos Horario1;
 const unsigned long DHT_TIEMPO_MEDIDAS = 10000;
 estado_Hardware Hardware::estadoHardware;
 config_Hardware Hardware::configHardware;
 millis_set Hardware::hardwareMillis;
-Hardware::Hardware() : sondaInterior(_HTINTPIN, _HTINTTYPE),sondaExterior(_HTEXTPIN, _HTEXTTYPE)
+#if (INV_SENSORES == C_SENSOR_INTERIOR_)
+Hardware::Hardware() : sondaInterior(_HTINTPIN, _HTINTTYPE)
+#elif (INV_SENSORES == C_SENSOR_INTERIOR_Y_EXTERIOR_)
+Hardware::Hardware() : sondaInterior(_HTINTPIN, _HTINTTYPE), sondaExterior(_HTEXTPIN, _HTEXTTYPE)
+#endif
 {
-    hardwareMillis.currentmillis = 0;                              // Lectura actual de ejecucion.
-    hardwareMillis.lastmillis = 0;                                 // Tiempo de la ultima ejecucion.
-    hardwareMillis.period = _DEFECTO_PERIODO;                      // Lapso de tiempo entre ejecuciones, defecto _DEFECTO_PERIODO.
-    configHardware.pinInt = _HTINTPIN;                             // Pin del sensor interior.
-    configHardware.typeInt = _HTINTTYPE;                           // Tipo de sensor interior.
-    configHardware.pinExt = _HTEXTPIN;                             // Pin del sensor exterior.
-    configHardware.typeExt = _HTEXTTYPE;                           // Tipo de sensor exterior.
+    hardwareMillis.currentmillis = 0;         // Lectura actual de ejecucion.
+    hardwareMillis.lastmillis = 0;            // Tiempo de la ultima ejecucion.
+    hardwareMillis.period = _DEFECTO_PERIODO; // Lapso de tiempo entre ejecuciones, defecto _DEFECTO_PERIODO.
     configHardware.pinControlLampara = _pinControlLampara;
     configHardware.pinControlCalefaccion = _pinControlCalefaccion;
     configHardware.pinControlHumidificador = _pinControlHumidificador;
     configHardware.pinControlDeshumidificador = _pinControlDeshumidificador;
     configHardware.pinControlExtractor = _pinControlExtractor;
     configHardware.pinControlImpulsor = _pinControlImpulsor;
-#ifdef NANO
+#if (INV_SENSORES == C_SENSOR_INTERIOR_)
+    configHardware.pinInt = _HTINTPIN;   // Pin del sensor interior.
+    configHardware.typeInt = _HTINTTYPE; // Tipo de sensor interior.
+#elif (INV_SENSORES == C_SENSOR_INTERIOR_Y_EXTERIOR_)
+    configHardware.pinExt = _HTEXTPIN;   // Pin del sensor exterior.
+    configHardware.typeExt = _HTEXTTYPE; // Tipo de sensor exterior.
 
 #endif
-#ifdef MC23008
-    Adafruit_MCP23X08 mcpIn, mcpOut;
+#if (INV_BOARD == NANO)
 
-#endif
-#ifndef NODEPOSITO
-    estadoHardware.EstadoBomba = false;     // Estado por defecto de la bomba al arranque.
-    estadoHardware.EstadoValvula = false;   // Estado por defecto de la valvula de llenado.
+#if (INV_DEPOSITO == NODEPOSITO)
+    estadoHardware.EstadoBomba = false;   // Estado por defecto de la bomba al arranque.
+    estadoHardware.EstadoValvula = false; // Estado por defecto de la valvula de llenado.
     estadoHardware.EstadoLampara = false;
-    estadoHardware.EstadoSensorMax = false; // Valor por defecto del sensor de maximo al arranque.
-    estadoHardware.EstadoSensorMin = false; // Valor por defecto del sensor de minimo al arranque.
+    estadoHardware.EstadoSensorMax = false;                        // Valor por defecto del sensor de maximo al arranque.
+    estadoHardware.EstadoSensorMin = false;                        // Valor por defecto del sensor de minimo al arranque.
     estadoHardware.TCalibracionBomba = _CalibracionBomba;          // Tiempo de calibrado de la bomba.
     estadoHardware.TCalibracionValvula = _CalibracionValvula;      // Tiempo de calibrado de la valvula de llenado.
     configHardware.pinControlBomba = _pinControlBomba;             // Asigna el pin de la bomba desde _BOMBA.
@@ -69,10 +72,14 @@ Hardware::Hardware() : sondaInterior(_HTINTPIN, _HTINTTYPE),sondaExterior(_HTEXT
     configHardware.pinControlSondaMaximo = _pinControlSondaMaximo; // Asigna el pin del sensor de maximo desde _SONDAMAXIMO.
     configHardware.pinControlSondaMinimo = _pinControlSondaMinimo; // Asigna el pin del sensor de maximo desde _SONDAMINIMO.
 #endif
+#endif
+#if (INV_EXPANSORES == C_MC23008_)
+    Adafruit_MCP23X08 mcpIn, mcpOut;
+#endif
 }
 void Hardware::begin()
 {
-#ifdef C_RTC_
+#if (INV_RELOJ == C_RTC_)
     DPRINTLN(F(" Antes de cargar RTC"));
     setSyncProvider(RTC.get);
     if (timeStatus() != timeSet)
@@ -84,9 +91,9 @@ void Hardware::begin()
         DPRINTLN(F(" RTC has set the system time"));
     }
 #endif
-    //sondaInterior.begin();
-    //sondaExterior.begin();
-#ifdef NANO
+    // sondaInterior.begin();
+    // sondaExterior.begin();
+#if (INV_BOARD == C_NANO_)
     DTIME;
     DPRINTLN(F(" Incializando Hardware NANO."));
     pinMode(configHardware.pinControlCalefaccion, OUTPUT);      // Pin de salida.
@@ -100,47 +107,45 @@ void Hardware::begin()
     pinMode(configHardware.pinControlValvula, OUTPUT);          // Pin de salida.
     pinMode(configHardware.pinControlLampara, OUTPUT);
 #endif
-#ifdef S74HCXX
-
+#if (INV_EXPANSORES == C_S74HCXX_)
 #endif
-#ifdef MC23008
+#if (INV_EXPANSORES == C_MC23008_)
+    DTIME;
+    DPRINTLN(F(" Incializando Hardware MC23008."));
     Adafruit_MCP23X08 mcpIn, mcpOut;
     mcpIn.begin_I2C(_IO1_ADD);
     mcpOut.begin_I2C(_IO2_ADD);
-    DTIME;
-    DPRINTLN(F(" Incializando Hardware MC23008."));
-
-    mcpOut.pinMode(configHardware.pinControlBomba, OUTPUT);            // Pin control Bomba.
-    mcpOut.pinMode(configHardware.pinControlValvula, OUTPUT);          // Pin control Valvula.
-    mcpOut.pinMode(configHardware.pinControlCalefaccion, OUTPUT);      // Pin control calefaccion.
-    mcpOut.pinMode(configHardware.pinControlHumidificador, OUTPUT);    // Pin control Humidificador.
-    mcpOut.pinMode(configHardware.pinControlDeshumidificador, OUTPUT); // Pin control DesHumidificador.
-    mcpOut.pinMode(configHardware.pinControlExtractor, OUTPUT);        // Pin control extractor.
-    mcpOut.pinMode(configHardware.pinControlImpulsor, OUTPUT);         // Pin control Impulsor.
-    mcpIn.pinMode(configHardware.pinEstadoLampara, INPUT);             // Estado de la iluminacion.
-    mcpIn.pinMode(configHardware.pinEstadoSondaMinimo, INPUT);         // Estado Sonda de Minimo.
-    mcpIn.pinMode(configHardware.pinEstadoSondaMaximo, INPUT);         // Estado Sonda de Maximo.
-    mcpIn.pinMode(configHardware.pinEstadoBomba, INPUT);               // Estado de la bomba.
-    mcpIn.pinMode(configHardware.pinEstadoValvula, INPUT);             // Estado de la electrovalvula.
-    mcpIn.pinMode(configHardware.pinEstadoExtractor, INPUT);           // Estado del extractor.
-    mcpIn.pinMode(configHardware.pinEstadoDeshumidificador, INPUT);    // Estado del deshumidificador.
-    mcpIn.pinMode(configHardware.pinEstadoHumidificador, INPUT);       // Estado del humidificador.
-    mcpIn.pinMode(configHardware.pinEstadoCalefaccion, INPUT);         // Estado calefaccion.
-    mcpIn.pinMode(configHardware.pinEstadoImpulsor, INPUT);            // Estado del impulsor.
-
+    mcpOut.pinMode(configHardware.pinControlCalefaccion, OUTPUT);                                        // Pin control calefaccion.
+    mcpOut.pinMode(configHardware.pinControlHumidificador, OUTPUT);                                      // Pin control Humidificador.
+    mcpOut.pinMode(configHardware.pinControlDeshumidificador, OUTPUT);                                   // Pin control DesHumidificador.
+    mcpOut.pinMode(configHardware.pinControlExtractor, OUTPUT);                                          // Pin control extractor.
+    mcpOut.pinMode(configHardware.pinControlImpulsor, OUTPUT);                                           // Pin control Impulsor.
+    mcpIn.pinMode(configHardware.pinEstadoLampara, INPUT);                                               // Estado de la iluminacion.
+    mcpIn.pinMode(configHardware.pinEstadoExtractor, INPUT);                                             // Estado del extractor.
+    mcpIn.pinMode(configHardware.pinEstadoDeshumidificador, INPUT);                                      // Estado del deshumidificador.
+    mcpIn.pinMode(configHardware.pinEstadoHumidificador, INPUT);                                         // Estado del humidificador.
+    mcpIn.pinMode(configHardware.pinEstadoCalefaccion, INPUT);                                           // Estado calefaccion.
+    mcpIn.pinMode(configHardware.pinEstadoImpulsor, INPUT);                                              // Estado del impulsor.
     estadoHardware.EstadoCalefaccion = mcpIn.digitalRead(configHardware.pinEstadoCalefaccion);           // Estado calefaccion.
     estadoHardware.EstadoHumidificador = mcpIn.digitalRead(configHardware.pinEstadoHumidificador);       // Estado del humidificador.
     estadoHardware.EstadoDeshumidificador = mcpIn.digitalRead(configHardware.pinEstadoDeshumidificador); // Estado del deshumidificador.
     estadoHardware.EstadoExtractor = mcpIn.digitalRead(configHardware.pinEstadoExtractor);               // Estado del extractor.
     estadoHardware.EstadoImpulsor = mcpIn.digitalRead(configHardware.pinEstadoImpulsor);                 // Estado del impulsor.
     estadoHardware.EstadoLampara = mcpIn.digitalRead(configHardware.pinEstadoLampara);                   // Estado iluminacion.
-    estadoHardware.EstadoSensorMax = mcpIn.digitalRead(configHardware.pinEstadoSondaMaximo);             // Estado Sonda de Maximo,
-    estadoHardware.EstadoSensorMin = mcpIn.digitalRead(configHardware.pinEstadoSondaMinimo);             // Estado Sonda de Minimo.
-    estadoHardware.EstadoBomba = mcpIn.digitalRead(configHardware.pinEstadoBomba);                       // Estado Bomba.
-    estadoHardware.EstadoValvula = mcpIn.digitalRead(configHardware.pinEstadoValvula);                   // Estado Valvula.
-
-    estadoHardware.TCalibracionBomba = _CalibracionBomba;     // Tiempo de calibrado de la bomba.
-    estadoHardware.TCalibracionValvula = _CalibracionValvula; // Tiempo de calibrado de la valvula de llenado.
+#if (INV_DEPOSITO == C_DEPOSITO_2_SONDAS)
+    mcpIn.pinMode(configHardware.pinEstadoSondaMinimo, INPUT);                               // Estado Sonda de Minimo.
+    mcpIn.pinMode(configHardware.pinEstadoSondaMaximo, INPUT);                               // Estado Sonda de Maximo.
+    mcpIn.pinMode(configHardware.pinEstadoBomba, INPUT);                                     // Estado de la bomba.
+    mcpIn.pinMode(configHardware.pinEstadoValvula, INPUT);                                   // Estado de la electrovalvula.
+    mcpOut.pinMode(configHardware.pinControlBomba, OUTPUT);                                  // Pin control Bomba.
+    mcpOut.pinMode(configHardware.pinControlValvula, OUTPUT);                                // Pin control Valvula.
+    estadoHardware.EstadoSensorMax = mcpIn.digitalRead(configHardware.pinEstadoSondaMaximo); // Estado Sonda de Maximo,
+    estadoHardware.EstadoSensorMin = mcpIn.digitalRead(configHardware.pinEstadoSondaMinimo); // Estado Sonda de Minimo.
+    estadoHardware.EstadoBomba = mcpIn.digitalRead(configHardware.pinEstadoBomba);           // Estado Bomba.
+    estadoHardware.EstadoValvula = mcpIn.digitalRead(configHardware.pinEstadoValvula);       // Estado Valvula.
+    estadoHardware.TCalibracionBomba = _CalibracionBomba;                                    // Tiempo de calibrado de la bomba.
+    estadoHardware.TCalibracionValvula = _CalibracionValvula;                                // Tiempo de calibrado de la valvula de llenado.
+#endif
 #endif
 }
 void Hardware::Control()
@@ -150,10 +155,10 @@ void Hardware::Control()
 }
 bool Hardware::GetSondaMaximo()
 {
-#ifdef NANO
+#if (INV_BOARD == C_NANO_)
     estadoHardware.EstadoSensorMax = digitalRead(configHardware.pinControlSondaMaximo);
 #endif
-#ifdef S74HCXX
+#if (INV_EXPANSORES == S74HCXX)
 
 #endif
 #ifdef DEBUG
@@ -168,11 +173,8 @@ bool Hardware::GetSondaMaximo()
 }
 bool Hardware::GetSondaMinimo()
 {
-#ifdef NANO
+#if (INV_BOARD == NANO)
     estadoHardware.EstadoSensorMin = digitalRead(configHardware.pinControlSondaMinimo);
-#endif
-#ifdef S74HCXX
-
 #endif
 #ifdef DEBUG
     DTIME;
@@ -191,31 +193,22 @@ void Hardware::UpdateSondas()
 }
 void Hardware::EncenderIluminacion()
 {
-#ifdef NANO
+#if (INV_BOARD == C_NANO_)
     digitalWrite(configHardware.pinControlLampara, HIGH);
     estadoHardware.EstadoLampara = true;
-#endif
-#ifdef S74HCXX
-
 #endif
 }
 bool Hardware::GetEstadoIluminacion()
 {
-#ifdef NANO
 
-#endif
-#ifdef S74HCXX
-
-#endif
     return estadoHardware.EstadoLampara;
 }
 void Hardware::ApagarIluminacion()
 {
-#ifdef NANO
+#if (INV_BOARD == C_NANO_)
     digitalWrite(configHardware.pinControlLampara, LOW);
     estadoHardware.EstadoLampara = false;
-#endif
-#ifdef S74HCXX
+#elif (INV_BOARD == C_ESP8266_)
 
 #endif
 }
@@ -225,11 +218,10 @@ void Hardware::ApagarValvula()
     DTIME;
     DPRINTLN(F(" LLE - Apagado de Valvula."));
 #endif
-#ifdef NANO
+#if (INV_BOARD == C_NANO_)
     digitalWrite(configHardware.pinControlValvula, LOW);
     estadoHardware.EstadoValvula = false;
-#endif
-#ifdef S74HCXX
+#elif (INV_BOARD == C_ESP8266_)
 
 #endif
 }
@@ -237,11 +229,10 @@ void Hardware::EncenderValvula()
 {
     DTIME;
     DPRINTLN(F(" LLE - Encendido de Valvula."));
-#ifdef NANO
+#if (INV_BOARD == C_NANO_)
     digitalWrite(configHardware.pinControlValvula, HIGH);
     estadoHardware.EstadoValvula = true;
-#endif
-#ifdef S74HCXX
+#elif (INV_BOARD == C_ESP8266_)
 
 #endif
 }
@@ -249,11 +240,10 @@ void Hardware::ApagarBomba()
 {
     DTIME;
     DPRINTLN(F(" VAC - Apagado de bomba."));
-#ifdef NANO
+#if (INV_BOARD == C_NANO_)
     digitalWrite(configHardware.pinControlBomba, LOW);
     estadoHardware.EstadoBomba = false;
-#endif
-#ifdef S74HCXX
+#elif (INV_BOARD == C_ESP8266_)
 
 #endif
 }
@@ -261,11 +251,10 @@ void Hardware::EncenderBomba()
 {
     DTIME;
     DPRINTLN(F(" VAC - Encendido de bomba."));
-#ifdef NANO
+#if (INV_BOARD == C_NANO_)
     digitalWrite(configHardware.pinControlBomba, HIGH);
     estadoHardware.EstadoBomba = true;
-#endif
-#ifdef S74HCXX
+#elif (INV_BOARD == C_ESP8266_)
 
 #endif
 }
@@ -514,6 +503,14 @@ datos_sensores Hardware::GetSensor(DHT Sensor)
 }
 void Hardware::GetSensores()
 {
-    Hardware::estadoHardware.AmbienteExterno = GetSensor(sondaExterior);
-    Hardware::estadoHardware.AmbienteInterno = GetSensor(sondaInterior);
+    hardwareMillis.currentmillis = millis();
+    if (hardwareMillis.currentmillis - hardwareMillis.lastmillis >= DHT_TIEMPO_MEDIDAS) // Ejecutar solo si han pasado mas de period.
+    {
+#if (INV_SENSORES == C_SENSOR_INTERIOR_Y_EXTERIOR_)
+        Hardware::estadoHardware.AmbienteExterno = GetSensor(sondaExterior);
+#elif (INV_SENSORES == C_SENSOR_INTERIOR_)
+        Hardware::estadoHardware.AmbienteInterno = GetSensor(sondaInterior);
+#endif
+        hardwareMillis.lastmillis = millis();
+    }
 }

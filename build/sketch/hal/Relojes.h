@@ -17,7 +17,7 @@
 #define _RTC_ADD 0x68
 #endif
 
-#ifdef RELOJI2C
+#if (INV_RELOJ ==  C_RELOJI2C_)
 #define _RTC_ADD 0x68
 #endif
 

@@ -2,9 +2,9 @@
 #include "EEPROM.h"
 #include "configurations.h" // Guarda los datos por defecto del equipo.
 #include "Debug.h"          // Necesario para las llamadas de depuración.
-#include "lib\DHT.h"            // Control sensores DHT.
+#include "lib\DHT.h"        // Control sensores DHT.
 #include <TimeLib.h>
-#include "hal\hal.h"		// Abstraccion de hardware.
+#include "hal\hal.h" // Abstraccion de hardware.
 #include "estructuras.h"
 #include "cAPPconfig.h"
 #include <Arduino.h> // STD de arduino.
@@ -48,12 +48,12 @@ void cAppConfig::configDefault()
     _D.SetAOff.set.Minuto = _DEFECTO_MINUTO_OFF;             // Temperatura / humedad arranque.
     _D.SetAOff.AmbienteHora.humedad = _DEFECTO_HR_OFF;       // Temperatura / humedad arranque.
     _D.SetAOff.AmbienteHora.temperatura = _DEFECTO_TEMP_OFF; // Temperatura / humedad arranque.
-    #ifndef NODEPOSITO
+#if (INV_DEPOSITO != ANULAR)
     _D.TCalibracionBomba = _CalibracionBomba;
     _D.CalBomba = _CalBomba;
     _D.CalValvula = _CalValvula;
     _D.TCalibracionValvula = _CalibracionValvula;
-    #endif
+#endif
 }
 /**
  * @brief Carga la configuracion desde la EEPROM

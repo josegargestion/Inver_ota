@@ -8,12 +8,12 @@
  * @copyright Copyright (c) 2022
  *
  */
-#include <Arduino.h>		// STD de arduino.
+#include <Arduino.h> // STD de arduino.
 #include "..\configurations.h"
 #ifndef NANO_H
 #define NANO_H
 
-#ifdef C_NANO_
+#if (INV_BOARD == C_NANO_)
 #include <pins_arduino.h>
 // Configuracion de pines
 const int _pinControlSondaMaximo = 12; // 22

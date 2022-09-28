@@ -13,7 +13,6 @@
 #ifndef PANTALLAS_H
 #define PANTALLAS_H
 
-#ifdef DISPLAYI2C
 #define _LCD_ADD 0x3f
 #endif
 

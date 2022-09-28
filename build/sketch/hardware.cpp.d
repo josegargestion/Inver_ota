@@ -46,9 +46,11 @@ c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\hardware.cpp.o: \
  C:\Users\usuario\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\3.0.2\cores\esp8266/debug.h \
  C:\Users\usuario\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\3.0.2\variants\nodemcu/pins_arduino.h \
  c:\users\usuario\appdata\local\arduino15\packages\esp8266\hardware\esp8266\3.0.2\variants\generic\common.h \
+ c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\definiciones.h \
  c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\hal\hal.h \
  c:\users\usuario\documents\github\inver_ota\build\sketch\lib\dht.h \
  c:\users\usuario\documents\github\inver_ota\build\sketch\configurations.h \
+ c:\users\usuario\documents\github\inver_ota\build\sketch\definiciones.h \
  c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\hal\esp8266.h \
  c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\Debug.h \
  C:\Users\usuario\Documents\Arduino\libraries\Time/TimeLib.h \
@@ -56,7 +58,10 @@ c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\hardware.cpp.o: \
  c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\estructuras.h \
  c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\cAPPconfig.h \
  C:\Users\usuario\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\3.0.2\libraries\EEPROM/EEPROM.h \
+ c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\lib\DHT.h \
  C:\Users\usuario\Documents\Arduino\libraries\DHT_sensor_library/DHT.h \
  c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\hardware.h \
- c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\lib\DHT.h \
+ c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\deposito.h \
+ c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\lib\RTCx.h \
+ c:\Users\usuario\Documents\GitHub\Inver_ota\build\sketch\lib\DS1307RTC.h \
  C:\Users\usuario\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\3.0.2\libraries\Wire/Wire.h

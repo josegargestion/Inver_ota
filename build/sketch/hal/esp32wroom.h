@@ -13,7 +13,7 @@
 #include "..\configurations.h"
 #define ESP32WROOM_H
 
-#ifdef ESP32WROOM
+#if (INV_BOARD == C_ESP32WROOM_)
 // Configuracion de pines
 const int _pinControlSondaMaximo = 12; // 22
 const int _pinControlSondaMinimo = 11; // 21

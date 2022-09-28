@@ -15,7 +15,7 @@
 #ifndef HARDWARE_H
 #define HARDWARE_H
 
-#include "lib\DHT.h"			// Control sensores DHT.
+#include "lib\DHT.h"		// Control sensores DHT.
 #include "estructuras.h"	// Estructuras de datos.
 #include <Arduino.h>		// STD de arduino.
 #include "configurations.h" // Guarda los datos por defecto del equipo.
@@ -25,27 +25,9 @@ class Hardware
 {
 public:
 	static estado_Hardware estadoHardware;
-	/**
-	 * @brief Construct a new Hardware object.
-	 *
-	 */
 	Hardware();
-	/**
-	 * @brief Inicializador del hardware.
-	 *
-	 */
 	void begin();
-	/**
-	 * @brief Estado de la Hardware.
-	 *
-	 * @return true Encendia
-	 * @return false Apagada
-	 */
 	static bool GetEstado();
-	/**
-	 * @brief Gestion automatica de la iluminación, para controlar desde la aplicacion principal.
-	 *
-	 */
 	static void Control();
 	static bool GetEstadoIluminacion();
 	static bool GetEstadoBomba();
@@ -77,16 +59,19 @@ public:
 
 private:
 	static config_Hardware configHardware;
+#if (INV_SENSORES == C_SENSOR_INTERIOR_)
 	/**
 	 * @brief Sensor Interior.
 	 *
 	 */
 	DHT sondaInterior;
+#elif (INV_SENSORES == C_SENSOR_INTERIOR_Y_EXTERIOR_)
 	/**
 	 * @brief Sensor Exterior.
 	 *
 	 */
 	DHT sondaExterior;
+#endif
 	/**
 	 * @brief Get the Sensor Exterior object
 	 *

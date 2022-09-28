@@ -67,16 +67,59 @@ void Ambiente::CallControls(bool estado) // LLamada a los elementos de control a
 }
 void Ambiente::ControlCalefaccion(set_Ambiente set) // Control de la calefaccion.
 {
+    Sistema.GetSensores();
+    if (Hardware::estadoHardware.AmbienteInterno.temperatura >= set.AmbienteHora.temperatura )
+    {
+        DTIME;
+        DPRINTLN(F(" Temperatura recinto mayor o igual a la programada. "));
+        Sistema.ApagarCalefaccion();
+    }
+    else if (Hardware::estadoHardware.AmbienteInterno.temperatura < set.AmbienteHora.temperatura )
+    {
+        DTIME;
+        DPRINTLN(F(" Temperatura recinto menor de la programada. "));
+        Sistema.EncenderCalefaccion();
+    }
 }
 void Ambiente::ControlHumidificador(set_Ambiente set) // Control del sistema de humidificacion.
 {
+    Sistema.GetSensores();
+    if (Hardware::estadoHardware.AmbienteInterno.temperatura >= set.AmbienteHora.temperatura )
+    {
+        DTIME;
+        DPRINTLN(F(" Temperatura recinto mayor o igual a la programada. "));
+        Sistema.ApagarCalefaccion();
+    }
+    else if (Hardware::estadoHardware.AmbienteInterno.temperatura < set.AmbienteHora.temperatura )
+    {
+        DTIME;
+        DPRINTLN(F(" Temperatura recinto menor de la programada. "));
+        Sistema.EncenderCalefaccion();
+    }
 }
 void Ambiente::ControlDeshumidificador(set_Ambiente set) // Control del sistema de des-humidificacion.
 {
+    Sistema.GetSensores();
+    if (Hardware::estadoHardware.AmbienteInterno.humedad > set.AmbienteHora.humedad )
+    {
+        DTIME;
+        DPRINTLN(F(" Humedad recinto mayor o igual a la programada. "));
+        Sistema.EncenderDeshumidificador();
+    }
+    else if (Hardware::estadoHardware.AmbienteInterno.humedad < set.AmbienteHora.humedad )
+    {
+        DTIME;
+        DPRINTLN(F(" Humedad recinto menor de la programada. "));
+        Sistema.ApagarDeshumidificador();
+    }
 }
 void Ambiente::ControlExtractor(set_Ambiente set) // Control del sistema de extraccion.
 {
+    Sistema.GetSensores();
+
 }
 void Ambiente::ControlImpulsor(set_Ambiente set) // Control del sistema de impulsion.
 {
+    Sistema.GetSensores();
+
 }
