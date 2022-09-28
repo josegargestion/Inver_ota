@@ -13,7 +13,7 @@
 #ifndef ESP8266_H
 #define ESP8266_H
 
-#ifdef ESP8266
+#if (INV_BOARD == C_ESP8266_)
 // Configuracion de pines
 const int _pinControlSondaMaximo = 12; // 22
 const int _pinControlSondaMinimo = 11; // 21

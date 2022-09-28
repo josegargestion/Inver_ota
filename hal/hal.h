@@ -35,30 +35,30 @@ const uint16_t EEPROM_ADDR = 0;
 const uint8_t EEPROM_SIG[2] = {0xee, 0x11};
 const uint8_t CONFIG_VERSION = 0;
 
-#ifndef NODEPOSITO
+#if (INV_DEPOSITO != ANULAR)
 const unsigned long _CalibracionBomba = 10000; // Tiempo de calibracion de la bomba.
 const bool _CalBomba = false;
 const bool _CalValvula = false;
 const unsigned long _CalibracionValvula = 10000; // Tiempo de calibracion de la valvula.
 #endif
 
-#ifdef C_RTC_
+#if (INV_RELOJ != ANULAR)
 #include "Relojes.h"
 #endif
 
-#ifdef C_LCD_
+#if (INV_PANTALLA != ANULAR)
 #include "Pantallas.h"
 #endif
 
-#ifdef C_NANO_
+#if (INV_BOARD == C_NANO_)
 #include "nano.h"
 #endif
 
-#ifdef C_MC23008_
+#if (INV_BOARD == C_MC23008_)
 #include "MC23008.h"
 #endif
 
-#ifdef C_ESP8266_
+#if (INV_BOARD == C_ESP8266_)
 #include "esp8266.h"
 #endif
 
