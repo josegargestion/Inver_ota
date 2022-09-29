@@ -2,19 +2,21 @@
 #ifndef ARDUINO_SENSOR_DHT_H
 #define ARDUINO_SENSOR_DHT_H
 #include <Arduino.h>
-#include <DHT.h>
+#include "..\lib\DHT.h"
 #include "ISensor.h"
 
-class Sensor_dht : public ISensor
+class Sensor_dht_ : public ISensor
 {
 private:
-	DHT sondaDHT;
-	datos_sensores GetSensor(DHT Sensor);
+	DHT Sensor_Raw;
+	DHT *TMPSens;
+	datos_sensores GetSensorDHT(DHT *TMPSens);
+	millis_set sensorMillis;
 
 public:
-	_Isensor GetSensor();
-	void UpdateSensor();
-	Sensor_dht(uint8_t _HTINTPIN, uint8_t _HTINTTYPE);
-	~Sensor_dht();
+	_ISensor GetSensor() override;
+	void UpdateSensor() override;
+	Sensor_dht_(uint8_t _HTINTPIN, uint8_t _HTINTTYPE);
+	~Sensor_dht_();
 };
 #endif

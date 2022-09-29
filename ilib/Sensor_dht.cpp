@@ -3,29 +3,43 @@
 #include <Arduino.h>		// STD de arduino.
 #include "..\configurations.h" // Guarda los datos por defecto del equipo.
 #include "Debug.h"			// Necesario para las llamadas de depuración.
-Sensor_dht::Sensor_dht(uint8_t _HTINTPIN, uint8_t _HTINTTYPE) : sondaDHT(_HTINTPIN, _HTINTTYPE)
+
+Sensor_dht_::Sensor_dht_(uint8_t _HTINTPIN, uint8_t _HTINTTYPE) : Sensor_Raw(_HTINTPIN, _HTINTTYPE)
+{
+    DHT *TMPSens = &Sensor_Raw;
+    sensorMillis.lastmillis = 0;
+}
+
+Sensor_dht_::~Sensor_dht_()
 {
 
 }
-
-Sensor_dht::~Sensor_dht()
+_ISensor Sensor_dht_::GetSensor()
 {
-
+    UpdateSensor();
+    datos_sensores AmbienteTemporal;
+    AmbienteTemporal = GetSensorDHT(TMPSens);
+    _ISensor Tmp;
+    Tmp.TipoSensor = _DHT22;
+    Tmp.ValorSensor = AmbienteTemporal;
+    return Tmp;
 }
-datos_sensores Sensor_dht::GetSensor(DHT sondaDHT)
+datos_sensores Sensor_dht_::GetSensorDHT(DHT *Sensor)
 {
     datos_sensores AmbienteTemporal;
-    millis_set sensorMillis;
-    sensorMillis.lastmillis = 0;
     unsigned long periodoActual;
     periodoActual = DHT_TIEMPO_MEDIDAS;
     sensorMillis.currentmillis = millis();
 
     if (sensorMillis.currentmillis - sensorMillis.lastmillis >= periodoActual) // Ejecutar solo si han pasado mas de period.
     {
-        AmbienteTemporal.temperatura = sondaDHT.readTemperature();
-        AmbienteTemporal.humedad = sondaDHT.readHumidity();
+        AmbienteTemporal.temperatura = Sensor->readTemperature();
+        AmbienteTemporal.humedad = Sensor->readHumidity();
     }
     sensorMillis.lastmillis = millis();
     return AmbienteTemporal;
+}
+void Sensor_dht_::UpdateSensor()
+{
+    GetSensorDHT(TMPSens);
 }

@@ -15,7 +15,6 @@
 #include "Debug.h"          // Necesario para las llamadas de depuración.
 #include "cAPPconfig.h"     // Guardado de datos a EEPROM.
 #include "lib\DHT.h"        // Control sensores DHT.
-#include <DHT.h>
 #include <TimeLib.h>
 #include "CTiempos.h" // Personal de control de tiempos del procesador y horarios.
 #include "hardware.h" // Biblioteca de control de hardware.
@@ -29,13 +28,13 @@
 #include <Arduino.h>     // STD de arduino.
 #include "estructuras.h" // Coleccion de estructuras comunes de proyecto.
 #include <Wire.h>        // Biblioteca i2c standar.
-#include "ilib\Sensor_dht.h"
 extern Control_Tiempos Horario1;
 estado_Hardware Hardware::estadoHardware;
 config_Hardware Hardware::configHardware;
 millis_set Hardware::hardwareMillis;
 #if (INV_SENSORES == C_SENSOR_INTERIOR_)
-Hardware::Hardware() : sondaInterior(_HTINTPIN, _HTINTTYPE)
+Hardware::Hardware()
+//Hardware::Hardware() : sondaInterior(_HTINTPIN, _HTINTTYPE)
 #elif (INV_SENSORES == C_SENSOR_INTERIOR_Y_EXTERIOR_)
 Hardware::Hardware() : sondaInterior(_HTINTPIN, _HTINTTYPE), sondaExterior(_HTEXTPIN, _HTEXTTYPE)
 #endif
@@ -152,6 +151,9 @@ void Hardware::Control()
 {
     DTIME;
     DPRINTLN(F(" Ejecutando Control de Hardware."));
+    _ISensor Tmp;
+    Tmp = TISensor.GetSensor();
+    estadoHardware.AmbienteInterno = Tmp.ValorSensor;
 }
 bool Hardware::GetSondaMaximo()
 {

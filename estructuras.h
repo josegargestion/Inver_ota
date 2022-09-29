@@ -160,11 +160,17 @@ enum _TSensor
 	_Humedad,
 	_Binario
 };
-struct _Isensor
+/**
+ * @brief Variables de sensores.
+ * @param TipoSensor Indica el tipo de sensor.
+ * @param ValorSensor Struc datos_sensores que almacena los datos de temp y humedad.
+ * @param Binario Almacena el valor de un sensor binario.
+ */
+struct _ISensor
 {
-	_TSensor TipoSensor;
-	datos_sensores ValorSensor;
-	boolean Binario;
+	_TSensor TipoSensor;			/// Tipo de sensor.
+	datos_sensores ValorSensor;		/// Valor del sensor.
+	boolean Binario;				/// Valor de sensor binario.
 };
 /**
  * @brief Variables de configuracion de la clase.

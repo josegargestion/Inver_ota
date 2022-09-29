@@ -20,6 +20,8 @@
 #include "configurations.h" // Guarda los datos por defecto del equipo.
 #include "Debug.h"			// Necesario para las llamadas de depuración.
 #include "cAPPconfig.h"		// Guardado de datos a EEPROM.
+#include "ilib\ISensor.h"
+#include "ilib\Sensor_dht.h"
 class Hardware
 {
 public:
@@ -63,7 +65,7 @@ private:
 	 * @brief Sensor Interior.
 	 *
 	 */
-	DHT sondaInterior;
+	//DHT sondaInterior;
 #elif (INV_SENSORES == C_SENSOR_INTERIOR_Y_EXTERIOR_)
 	/**
 	 * @brief Sensor Exterior.

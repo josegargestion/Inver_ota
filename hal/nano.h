@@ -19,9 +19,9 @@
 const int _pinControlSondaMaximo = 12; // 22
 const int _pinControlSondaMinimo = 11; // 21
 const int _pinControlBomba = 10;
+const int _pinControlValvula = 7;
 const uint8_t _HTINTPIN = 10;
 const uint8_t _HTEXTPIN = 8;
-const int _pinControlValvula = 7;
 const int _DHTPIN = 8;
 const int _pinControlDeshumidificador = 1;
 const int _pinControlHumidificador = 2;

@@ -5,7 +5,7 @@
 class ISensor
 {
 public:
-	virtual _Isensor GetSensor() = 0;
+	virtual _ISensor GetSensor() = 0;
 	virtual void UpdateSensor() = 0;
 	virtual ~ISensor();
 };

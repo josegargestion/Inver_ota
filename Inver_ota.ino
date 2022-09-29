@@ -11,7 +11,6 @@
 const char *ssid = STASSID;
 const char *password = STAPSK;
 #endif
-
 #include "invernadero.h"
 Inver Inver1;
 void setup()

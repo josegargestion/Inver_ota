@@ -17,6 +17,7 @@
 #include "hardware.h"       // Clase de control del hardware.
 #include "CTiempos.h"       // Clase de control de horarios.
 #include <Arduino.h>        // STD de arduino.
+#include "ilib\Sensor_dht.h"
 cAppConfig configApp1;
 Control_Tiempos Horario1;
 Hardware Sistema;
